@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Lost Pet - PetFinder</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <i class="fas fa-paw"></i>
+                <span>PetFinder</span>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html#home" class="nav-link">Home</a>
+                <a href="index.html#lost-pets" class="nav-link">Lost Pets</a>
+                <a href="index.html#found-pets" class="nav-link">Found Pets</a>
+                <a href="add-lost-pet.html" class="nav-link active">Add Lost Pet</a>
+                <a href="add-found-pet.html" class="nav-link">Add Found Pet</a>
+                <a href="index.html#about" class="nav-link">About</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="form-container">
+        <div class="form-wrapper">
+            <h1>Report a Lost Pet</h1>
+            <p class="form-subtitle">Help us find your furry friend</p>
+
+            <form id="lost-pet-form">
+                <!-- Pet Name -->
+                <div class="form-group">
+                    <label for="pet-name">Pet Name <span class="required">*</span></label>
+                    <input 
+                        type="text" 
+                        id="pet-name" 
+                        name="petName" 
+                        placeholder="Enter your pet's name" 
+                        required>
+                </div>
+
+                <!-- Pet Type -->
+                <div class="form-group">
+                    <label for="pet-type">Pet Type <span class="required">*</span></label>
+                    <select id="pet-type" name="petType" required>
+                        <option value="">-- Select Pet Type --</option>
+                        <option value="dog">Dog</option>
+                        <option value="cat">Cat</option>
+                        <option value="bird">Bird</option>
+                        <option value="rabbit">Rabbit</option>
+                        <option value="hamster">Hamster</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <!-- Breed -->
+                <div class="form-group" id="breed-group" style="display: none;">
+                    <label for="breed">Breed <span class="required">*</span></label>
+                    <select id="breed" name="breed">
+                        <option value="">-- Select Breed --</option>
+                    </select>
+                </div>
+
+                <!-- Color -->
+                <div class="form-group">
+                    <label for="color">Color <span class="required">*</span></label>
+                    <select id="color" name="color" required>
+                        <option value="">-- Select Color --</option>
+                        <option value="black">Black</option>
+                        <option value="white">White</option>
+                        <option value="brown">Brown</option>
+                        <option value="golden">Golden</option>
+                        <option value="gray">Gray</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <!-- Custom Color -->
+                <div class="form-group" id="custom-color-group" style="display: none;">
+                    <label for="custom-color">Specify Color <span class="required">*</span></label>
+                    <input 
+                        type="text" 
+                        id="custom-color" 
+                        name="customColor" 
+                        placeholder="Enter custom color">
+                </div>
+
+                <!-- Size -->
+                <div class="form-group">
+                    <label for="size">Size <span class="required">*</span></label>
+                    <select id="size" name="size" required>
+                        <option value="">-- Select Size --</option>
+                        <option value="small">Small</option>
+                        <option value="medium">Medium</option>
+                        <option value="large">Large</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <!-- Custom Size -->
+                <div class="form-group" id="custom-size-group" style="display: none;">
+                    <label for="custom-size">Specify Size <span class="required">*</span></label>
+                    <input 
+                        type="text" 
+                        id="custom-size" 
+                        name="customSize" 
+                        placeholder="Enter custom size description">
+                </div>
+
+                <!-- Gender -->
+                <div class="form-group">
+                    <label for="gender">Gender <span class="required">*</span></label>
+                    <select id="gender" name="gender" required>
+                        <option value="">-- Select Gender --</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="unknown">Unknown</option>
+                    </select>
+                </div>
+
+                <!-- Tag/Microchip ID -->
+                <div class="form-group">
+                    <label for="tag-id">Tag/Microchip ID (Optional)</label>
+                    <input 
+                        type="number" 
+                        id="tag-id" 
+                        name="tagId" 
+                        placeholder="Enter tag or microchip ID">
+                </div>
+
+                <!-- Date Lost -->
+                <div class="form-group">
+                    <label for="date-lost">Date Lost <span class="required">*</span></label>
+                    <input 
+                        type="date" 
+                        id="date-lost" 
+                        name="dateLost" 
+                        required>
+                </div>
+
+                <!-- Lost Location -->
+                <div class="form-group">
+                    <label for="location">Location Lost <span class="required">*</span></label>
+                    <input 
+                        type="text" 
+                        id="location" 
+                        name="location" 
+                        placeholder="Enter location where pet was lost" 
+                        required>
+                </div>
+
+                <!-- Contact Number -->
+                <div class="form-group">
+                    <label for="contact">Contact Number <span class="required">*</span></label>
+                    <input 
+                        type="tel" 
+                        id="contact" 
+                        name="contact" 
+                        placeholder="Enter 10-digit phone number"
+                        pattern="[0-9]{10}" 
+                        required>
+                    <small class="error-message" id="contact-error"></small>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label for="description">Description <span class="required">*</span></label>
+                    <textarea 
+                        id="description" 
+                        name="description" 
+                        placeholder="Describe any distinctive features or characteristics" 
+                        rows="4" 
+                        required></textarea>
+                </div>
+
+                <!-- Image Upload -->
+                <div class="form-group">
+                    <label for="image">Upload Pet Image <span class="required">*</span></label>
+                    <div class="image-upload">
+                        <input 
+                            type="file" 
+                            id="image" 
+                            name="image" 
+                            accept="image/*" 
+                            required>
+                        <label for="image" class="file-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Choose Image</span>
+                        </label>
+                        <div id="image-preview"></div>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Submit Report</button>
+                    <a href="index.html" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 PetFinder. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="lost-pet-form.js"></script>
+</body>
+</html>

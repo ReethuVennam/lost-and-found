@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost & Found Pets - Find Your Furry Friend</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <i class="fas fa-paw"></i>
+                <span>PetFinder</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#lost-pets" class="nav-link">Lost Pets</a>
+                <a href="#found-pets" class="nav-link">Found Pets</a>
+                <a href="add-lost-pet.html" class="nav-link">Add Lost Pet</a>
+                <a href="add-found-pet.html" class="nav-link">Add Found Pet</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Find Your Furry Friend</h1>
+            <p>Help Reunite Lost Pets with Their Families</p>
+            <div class="hero-buttons">
+                <a href="add-lost-pet.html" class="btn btn-primary">Report Lost Pet</a>
+                <a href="add-found-pet.html" class="btn btn-secondary">Report Found Pet</a>
+            </div>
+        </div>
+        <div class="hero-images">
+            <i class="fas fa-dog"></i>
+            <i class="fas fa-cat"></i>
+        </div>
+    </section>
+
+    <!-- Recently Lost Pets Section -->
+    <section class="pets-section" id="lost-pets">
+        <div class="section-container">
+            <h2>Recently Reported Lost Pets</h2>
+            <div class="pets-grid" id="lost-pets-grid">
+                <!-- Pet cards will be populated by JavaScript -->
+            </div>
+            <p class="empty-message" id="lost-empty">No lost pets reported yet.</p>
+        </div>
+    </section>
+
+    <!-- Recently Found Pets Section -->
+    <section class="pets-section found-section" id="found-pets">
+        <div class="section-container">
+            <h2>Recently Found Pets</h2>
+            <div class="pets-grid" id="found-pets-grid">
+                <!-- Pet cards will be populated by JavaScript -->
+            </div>
+            <p class="empty-message" id="found-empty">No found pets reported yet.</p>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="section-container">
+            <h2>What People Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"PetFinder helped me reunite with my beloved Golden Retriever, Max. I can't thank this platform enough!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://i.pravatar.cc/100?img=1" alt="Sarah">
+                        <div>
+                            <strong>Sarah Johnson</strong>
+                            <span>Pet Owner</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Found a lost tabby cat and used this site to locate the owner. The community is amazing and supportive!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://i.pravatar.cc/100?img=2" alt="Mike">
+                        <div>
+                            <strong>Mike Chen</strong>
+                            <span>Good Samaritan</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Easy to use and effective! My cat Whiskers was found within 48 hours of posting. Highly recommended!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://i.pravatar.cc/100?img=3" alt="Emily">
+                        <div>
+                            <strong>Emily Rodriguez</strong>
+                            <span>Pet Owner</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="about-section" id="about">
+        <div class="section-container">
+            <h2>About Us</h2>
+            <p>PetFinder is a community-driven platform dedicated to reuniting lost pets with their families. Our mission is to provide a safe, easy-to-use space where pet owners and compassionate individuals can connect to help pets find their way home. Every pet deserves to be with their loved ones, and we're here to make that happen.</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="section-container">
+            <h2>Get In Touch</h2>
+            <div class="contact-info">
+                <div class="contact-card">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Email</h3>
+                    <p>support@petfinder.com</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-phone"></i>
+                    <h3>Phone</h3>
+                    <p>+1 (555) 123-4567</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Address</h3>
+                    <p>123 Pet Lane, Animal City, AC 12345</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>PetFinder</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Policies</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 PetFinder. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
