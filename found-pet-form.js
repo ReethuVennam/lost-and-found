@@ -1,22 +1,13 @@
 // ========== Found Pet Form Script ========== 
 
-let editingPetId = null;
-let isEditMode = false;
+// Edit mode removed — form only supports creating new reports
 
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('found-pet-form');
 
     if (!form) return;
 
-    // Check if editing
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('edit')) {
-        editingPetId = parseInt(urlParams.get('edit'));
-        isEditMode = true;
-        loadPetDataForEditing();
-        document.querySelector('.form-wrapper h1').textContent = 'Edit Found Pet Report';
-        document.querySelector('.form-subtitle').textContent = 'Update pet information';
-    }
+    // No edit mode: form always creates a new found pet report
 
     // Initialize dynamic fields
     initializeConditionalFields();
@@ -34,49 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// ========== Load Pet Data for Editing ========== 
-function loadPetDataForEditing() {
-    const petData = sessionStorage.getItem('editingPetData');
-    if (!petData) return;
-
-    const pet = JSON.parse(petData);
-    
-    // Populate form fields
-    document.getElementById('pet-type').value = pet.petType || '';
-    handlePetTypeChange(); // Trigger breed dropdown
-    document.getElementById('breed').value = pet.breed || '';
-    
-    if (pet.color === 'other' || !['black', 'white', 'brown', 'golden', 'gray'].includes(pet.color)) {
-        document.getElementById('color').value = 'other';
-        handleColorChange();
-        document.getElementById('custom-color').value = pet.color || '';
-    } else {
-        document.getElementById('color').value = pet.color || '';
-    }
-
-    if (pet.size === 'other' || !['small', 'medium', 'large'].includes(pet.size)) {
-        document.getElementById('size').value = 'other';
-        handleSizeChange();
-        document.getElementById('custom-size').value = pet.size || '';
-    } else {
-        document.getElementById('size').value = pet.size || '';
-    }
-
-    document.getElementById('date-found').value = pet.dateFound || '';
-    document.getElementById('location').value = pet.location || '';
-    document.getElementById('contact').value = pet.contact || '';
-    document.getElementById('description').value = pet.description || '';
-
-    // Show image preview
-    if (pet.image) {
-        document.getElementById('image-preview').innerHTML = `<img src="${pet.image}" alt="Pet Preview">`;
-    }
-
-    // Clean up session storage
-    sessionStorage.removeItem('editingPetData');
-    sessionStorage.removeItem('editingPetId');
-    sessionStorage.removeItem('editingPetType');
-}
+// Edit mode removed — no load function
 
 // ========== Initialize Conditional Fields ========== 
 function initializeConditionalFields() {
@@ -210,9 +159,9 @@ function handleFoundPetSubmission() {
         return;
     }
 
-    // Validate image (only if not editing with existing image)
+    // Validate image
     const imageInput = document.getElementById('image');
-    if (!isEditMode && !imageInput.files.length) {
+    if (!imageInput.files.length) {
         alert('Please upload a pet image.');
         return;
     }
@@ -232,28 +181,7 @@ function handleFoundPetSubmission() {
     const contact = phoneDigits;
     const description = formData.get('description');
 
-    // If editing and no new image, use existing one
-    if (isEditMode && !imageInput.files.length) {
-        const existingPet = PetDataManager.getFoundPetById(editingPetId);
-        const petData = {
-            petType,
-            breed,
-            color: finalColor,
-            size: finalSize,
-            dateFound,
-            location,
-            contact,
-            description,
-            image: existingPet.image
-        };
-
-        PetDataManager.updateFoundPet(editingPetId, petData);
-        alert('Found pet report updated successfully!');
-        window.location.href = 'index.html#found-pets';
-        return;
-    }
-
-    // Convert image to base64 (new image or edit with new image)
+    // Convert image to base64
     const imageFile = imageInput.files[0];
     const reader = new FileReader();
 
@@ -270,16 +198,9 @@ function handleFoundPetSubmission() {
             image: event.target.result
         };
 
-        if (isEditMode) {
-            // Update existing pet
-            PetDataManager.updateFoundPet(editingPetId, petData);
-            alert('Found pet report updated successfully!');
-        } else {
-            // Add new pet
-            PetDataManager.addFoundPet(petData);
-            alert('Found pet report submitted successfully!');
-        }
-
+        // Add new pet
+        PetDataManager.addFoundPet(petData);
+        alert('Found pet report submitted successfully!');
         window.location.href = 'index.html#found-pets';
     };
 

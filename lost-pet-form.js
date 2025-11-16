@@ -1,22 +1,13 @@
 // ========== Lost Pet Form Script ========== 
 
-let editingPetId = null;
-let isEditMode = false;
+// Edit mode removed — form only supports creating new reports
 
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('lost-pet-form');
 
     if (!form) return;
 
-    // Check if editing
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('edit')) {
-        editingPetId = parseInt(urlParams.get('edit'));
-        isEditMode = true;
-        loadPetDataForEditing();
-        document.querySelector('.form-wrapper h1').textContent = 'Edit Lost Pet Report';
-        document.querySelector('.form-subtitle').textContent = 'Update pet information';
-    }
+    // No edit mode: form always creates a new lost pet report
 
     // Initialize dynamic fields
     initializeConditionalFields();
@@ -34,52 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// ========== Load Pet Data for Editing ========== 
-function loadPetDataForEditing() {
-    const petData = sessionStorage.getItem('editingPetData');
-    if (!petData) return;
-
-    const pet = JSON.parse(petData);
-    
-    // Populate form fields
-    document.getElementById('pet-name').value = pet.petName || '';
-    document.getElementById('pet-type').value = pet.petType || '';
-    handlePetTypeChange(); // Trigger breed dropdown
-    document.getElementById('breed').value = pet.breed || '';
-    
-    if (pet.color === 'other' || !['black', 'white', 'brown', 'golden', 'gray'].includes(pet.color)) {
-        document.getElementById('color').value = 'other';
-        handleColorChange();
-        document.getElementById('custom-color').value = pet.color || '';
-    } else {
-        document.getElementById('color').value = pet.color || '';
-    }
-
-    if (pet.size === 'other' || !['small', 'medium', 'large'].includes(pet.size)) {
-        document.getElementById('size').value = 'other';
-        handleSizeChange();
-        document.getElementById('custom-size').value = pet.size || '';
-    } else {
-        document.getElementById('size').value = pet.size || '';
-    }
-
-    document.getElementById('gender').value = pet.gender || '';
-    document.getElementById('tag-id').value = pet.tagId || '';
-    document.getElementById('date-lost').value = pet.dateLost || '';
-    document.getElementById('location').value = pet.location || '';
-    document.getElementById('contact').value = pet.contact || '';
-    document.getElementById('description').value = pet.description || '';
-
-    // Show image preview
-    if (pet.image) {
-        document.getElementById('image-preview').innerHTML = `<img src="${pet.image}" alt="Pet Preview">`;
-    }
-
-    // Clean up session storage
-    sessionStorage.removeItem('editingPetData');
-    sessionStorage.removeItem('editingPetId');
-    sessionStorage.removeItem('editingPetType');
-}
+// Edit mode removed — no load function
 
 // ========== Initialize Conditional Fields ========== 
 function initializeConditionalFields() {
@@ -213,9 +159,9 @@ function handleLostPetSubmission() {
         return;
     }
 
-    // Validate image (only if not editing with existing image)
+    // Validate image
     const imageInput = document.getElementById('image');
-    if (!isEditMode && !imageInput.files.length) {
+    if (!imageInput.files.length) {
         alert('Please upload a pet image.');
         return;
     }
@@ -238,31 +184,7 @@ function handleLostPetSubmission() {
     const contact = phoneDigits;
     const description = formData.get('description');
 
-    // If editing and no new image, use existing one
-    if (isEditMode && !imageInput.files.length) {
-        const existingPet = PetDataManager.getLostPetById(editingPetId);
-        const petData = {
-            petName,
-            petType,
-            breed,
-            color: finalColor,
-            size: finalSize,
-            gender,
-            tagId,
-            dateLost,
-            location,
-            contact,
-            description,
-            image: existingPet.image
-        };
-
-        PetDataManager.updateLostPet(editingPetId, petData);
-        alert('Lost pet report updated successfully!');
-        window.location.href = 'index.html#lost-pets';
-        return;
-    }
-
-    // Convert image to base64 (new image or edit with new image)
+    // Convert image to base64
     const imageFile = imageInput.files[0];
     const reader = new FileReader();
 
@@ -281,17 +203,9 @@ function handleLostPetSubmission() {
             description,
             image: event.target.result
         };
-
-        if (isEditMode) {
-            // Update existing pet
-            PetDataManager.updateLostPet(editingPetId, petData);
-            alert('Lost pet report updated successfully!');
-        } else {
-            // Add new pet
-            PetDataManager.addLostPet(petData);
-            alert('Lost pet report submitted successfully!');
-        }
-
+        // Add new pet
+        PetDataManager.addLostPet(petData);
+        alert('Lost pet report submitted successfully!');
         window.location.href = 'index.html#lost-pets';
     };
 

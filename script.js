@@ -59,6 +59,7 @@ const PetDataManager = {
         localStorage.setItem('foundPets', JSON.stringify(foundPets));
         return petData;
     }
+    
 };
 
 // ========== Display Pet Cards ========== 
@@ -67,13 +68,50 @@ function displayPetCards() {
     displayFoundPets();
 }
 
+// ========== Search & Filter State and Helpers ==========
+let searchQuery = '';
+let typeFilter = 'all';
+
+function initFilters() {
+    const searchInput = document.getElementById('search-input');
+    const typeSelect = document.getElementById('filter-type');
+
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.trim().toLowerCase();
+            displayPetCards();
+        });
+    }
+
+    if (typeSelect) {
+        typeSelect.addEventListener('change', (e) => {
+            typeFilter = e.target.value;
+            displayPetCards();
+        });
+    }
+}
+
+function matchesFilters(pet) {
+    if (!pet) return false;
+
+    // Type filter (petType may be undefined for some entries)
+    if (typeFilter && typeFilter !== 'all') {
+        if (!pet.petType || pet.petType.toLowerCase() !== typeFilter.toLowerCase()) return false;
+    }
+
+    if (!searchQuery) return true;
+
+    const fields = [pet.petName, pet.breed, pet.color, pet.location, pet.description, pet.tagId, pet.contact];
+    return fields.some(f => f && f.toString().toLowerCase().includes(searchQuery));
+}
+
 function displayLostPets() {
     const lostPetsGrid = document.getElementById('lost-pets-grid');
     const lostEmpty = document.getElementById('lost-empty');
 
     if (!lostPetsGrid) return;
 
-    const lostPets = PetDataManager.getLostPets();
+    const lostPets = PetDataManager.getLostPets().filter(matchesFilters);
 
     if (lostPets.length === 0) {
         lostPetsGrid.innerHTML = '';
@@ -92,7 +130,7 @@ function displayFoundPets() {
 
     if (!foundPetsGrid) return;
 
-    const foundPets = PetDataManager.getFoundPets();
+    const foundPets = PetDataManager.getFoundPets().filter(matchesFilters);
 
     if (foundPets.length === 0) {
         foundPetsGrid.innerHTML = '';
@@ -142,10 +180,14 @@ function createPetCard(pet, type) {
                         <span>${pet.contact}</span>
                     </div>
                 </div>
+                
             </div>
         </div>
     `;
 }
+
+// ========== Edit / Delete Handlers ==========
+// Edit/Delete features removed — UI no longer exposes these actions.
 
 function truncateDescription(description, lines = 2) {
     if (!description) return '';
@@ -158,6 +200,7 @@ function truncateDescription(description, lines = 2) {
 
 // ========== Display on Page Load ========== 
 document.addEventListener('DOMContentLoaded', function() {
+    initFilters();
     displayPetCards();
 });
 
